@@ -23,9 +23,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Database user and password are given below
+// DB_USER=uploadFiles
+// DB_PASS=eUxDxIl39d5KOyZo
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.hhukhjd.mongodb.net/?retryWrites=true&w=majority`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -36,7 +39,6 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const fileCollection = client.db('seo-page1').collection('files');
 
@@ -52,7 +54,6 @@ async function run() {
             res.send(services);
         });
     } finally {
-        // Ensures that the client will close when you finish/error
         // await client.close();
     }
 }
